@@ -1,4 +1,4 @@
-import { Counter } from '../counter/Counter';
+import { DishCounter } from '../dishCounter/DishCounter';
 
 export const MenuListItem = ({ menuItem }) => {
   const { name } = menuItem;
@@ -6,7 +6,7 @@ export const MenuListItem = ({ menuItem }) => {
   return (
     <li>
       {name}
-      <Counter />
+      <DishCounter min={0} max={5} />
     </li>
   );
 };

@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
-export const useCount = () => {
-  const [count, setCount] = useState({ value: 0 });
+export const useCount = ({ min = min, max = max } = {}) => {
+  const [count, setCount] = useState({ value: min });
 
   const onIncrement = () => {
     setCount((prevState) => {
-      if (prevState.value < 5) {
+      if (prevState.value < max) {
         return {
           value: prevState.value + 1,
         };
@@ -18,7 +18,7 @@ export const useCount = () => {
 
   const onDecrement = () => {
     setCount((prevState) => {
-      if (prevState.value > 0) {
+      if (prevState.value > min) {
         return {
           value: prevState.value - 1,
         };
