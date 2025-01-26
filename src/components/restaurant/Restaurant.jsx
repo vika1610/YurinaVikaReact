@@ -1,5 +1,5 @@
-import { MenuItem } from '../menuItem/MenuItem';
-import { ReviewsItem } from '../reviewsItem/ReviewsItem';
+import { MenuList } from '../MenuList/MenuList';
+import { ReviewsList } from '../reviewsList/ReviewsList';
 
 export const Restaurant = ({ restaurant }) => {
   const { name, reviews, menu } = restaurant;
@@ -11,27 +11,8 @@ export const Restaurant = ({ restaurant }) => {
   return (
     <div>
       <h2>{name}</h2>
-      {Boolean(menu.length) && (
-        <div>
-          <h3>Меню</h3>
-          <ul>
-            {menu.map((menuItem) => (
-              <MenuItem key={menuItem.id} menuItem={menuItem} />
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {Boolean(reviews.length) && (
-        <div>
-          <h3>Отзывы</h3>
-          <ul>
-            {reviews.map((reviewsItem) => (
-              <ReviewsItem key={reviewsItem.id} reviewsItem={reviewsItem} />
-            ))}
-          </ul>
-        </div>
-      )}
+      {Boolean(menu.length) && <MenuList menu={menu} />}
+      {Boolean(reviews.length) && <ReviewsList reviews={reviews} />}
     </div>
   );
 };

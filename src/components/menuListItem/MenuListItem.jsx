@@ -1,6 +1,6 @@
 import { Counter } from '../counter/Counter';
 
-export const MenuItem = ({ menuItem }) => {
+export const MenuListItem = ({ menuItem }) => {
   const { name } = menuItem;
 
   return (

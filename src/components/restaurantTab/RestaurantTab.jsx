@@ -1,7 +1,11 @@
-export const RestaurantTab = ({ name, onClick }) => {
+export const RestaurantTab = ({ name, onClick, isActive }) => {
   if (!name) {
     return null;
   }
 
-  return <button onClick={onClick}>{name}</button>;
+  return (
+    <button disabled={isActive} onClick={onClick}>
+      {name}
+    </button>
+  );
 };

@@ -7,6 +7,7 @@ export const Restaurants = () => {
   const [activeRestaurant, setActiveRestaurant] = useState(restaurants[0]);
 
   const changeRestaurant = (restaurant) => {
+    if (activeRestaurant === restaurant) return;
     setActiveRestaurant(restaurant);
   };
 
@@ -18,10 +19,13 @@ export const Restaurants = () => {
             name={restaurant.name}
             key={restaurant.id}
             onClick={() => changeRestaurant(restaurant)}
+            isActive={restaurant === activeRestaurant}
           />
         ))}
       </div>
-      <Restaurant key={activeRestaurant.id} restaurant={activeRestaurant} />
+      {activeRestaurant && (
+        <Restaurant key={activeRestaurant.id} restaurant={activeRestaurant} />
+      )}
     </div>
   );
 };
