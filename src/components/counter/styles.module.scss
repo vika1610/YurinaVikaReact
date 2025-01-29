@@ -1,0 +1,26 @@
+.counter {
+  display: flex;
+  align-items: center;
+  flex-flow: row nowrap;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  font-size: 40px;
+  color: white;
+  background: orange;
+
+  &:hover {
+    background: #f7ca37;
+  }
+}
+
+.value {
+  margin: 0 10px;
+  font-size: 20px;
+  color: gray;
+}

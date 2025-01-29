@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.title {
+  margin-bottom: 20px;
+  font-size: 48px;
+  font-style: italic;
+  text-align: center;
+}
