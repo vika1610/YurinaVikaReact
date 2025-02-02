@@ -2,7 +2,7 @@ import { use } from 'react';
 import cl from 'classnames';
 import { ReviewsListItem } from '../reviewsListItem/ReviewsListItem';
 import c from './styles.module.scss';
-import { ThemeContext } from '../themeContext/index.';
+import { ThemeContext } from '../themeContext';
 
 export const ReviewsList = ({ reviews }) => {
   const { theme } = use(ThemeContext);

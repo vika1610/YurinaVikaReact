@@ -1,7 +1,7 @@
 import { use } from 'react';
 import c from './styles.module.scss';
 import cl from 'classnames';
-import { ThemeContext } from '../themeContext/index.';
+import { ThemeContext } from '../themeContext';
 
 export const RestaurantTab = ({ name, onClick, isActive }) => {
   const { theme } = use(ThemeContext);
