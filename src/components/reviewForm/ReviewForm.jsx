@@ -1,5 +1,7 @@
 import { useForm } from '../../hooks/use-form';
+import { Button } from '../button/Button';
 import { Counter } from '../counter/Counter';
+import c from './styles.module.scss';
 
 export const ReviewForm = () => {
   const {
@@ -13,10 +15,11 @@ export const ReviewForm = () => {
   const { user, text, rating } = form;
 
   return (
-    <div>
-      <div>
-        <span>Name</span>
+    <div className={c.container}>
+      <div className={c.inputInner}>
+        <span className={c.title}>Name</span>
         <input
+          className={c.input}
           type='text'
           value={user}
           onChange={(event) => {
@@ -24,23 +27,24 @@ export const ReviewForm = () => {
           }}
         />
       </div>
-      <div>
-        <span>Text</span>
+      <div className={c.inputInner}>
+        <span className={c.title}>Text</span>
         <input
+          className={c.input}
           type='text'
           value={text}
           onChange={(event) => setText(event.target.value)}
         />
       </div>
-      <div>
-        <span>Rating</span>
+      <div className={c.inputInner}>
+        <span className={c.title}>Rating</span>
         <Counter
           count={rating}
           onDecrement={setDecrementRating}
           onIncrement={setIncrementRating}
         />
       </div>
-      <button onClick={setClearForm}>Clear form</button>
+      <Button onClick={setClearForm} title={'Clear form'} />
     </div>
   );
 };
