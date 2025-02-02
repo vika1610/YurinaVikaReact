@@ -3,6 +3,11 @@
   flex-flow: column nowrap;
   padding: 40px;
   background: orange;
+
+  &.dark {
+    color: white;
+    background: black;
+  }
 }
 
 .title {
