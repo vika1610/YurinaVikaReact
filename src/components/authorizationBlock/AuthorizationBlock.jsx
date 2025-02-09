@@ -8,7 +8,7 @@ export const AuthorizationBlock = () => {
 
   return (
     <div className={c.container}>
-      <span className={c.user}>{user.name && user.name}</span>
+      {user.name && <span className={c.user}>{user.name}</span>}
       <Button
         title={user.name ? 'Выйти' : 'Войти'}
         onClick={setAuthorization}
