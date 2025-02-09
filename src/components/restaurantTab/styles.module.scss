@@ -13,4 +13,14 @@
   &:disabled {
     background: #f7ca37;
   }
+
+  &.dark {
+    color: white;
+    background: black;
+  
+    &:hover,
+    &:disabled {
+      background: lightgray;
+    }
+  }
 }

@@ -25,13 +25,7 @@ export const Restaurants = () => {
         ))}
       </div>
       {activeRestaurant && (
-        <>
-          <Restaurant key={activeRestaurant.id} restaurant={activeRestaurant} />
-          <Restaurant
-            key={activeRestaurant.id + '1'}
-            restaurant={activeRestaurant}
-          />
-        </>
+        <Restaurant key={activeRestaurant.id} restaurant={activeRestaurant} />
       )}
     </div>
   );

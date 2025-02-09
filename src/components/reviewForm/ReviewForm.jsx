@@ -1,4 +1,5 @@
 import { useForm } from '../../hooks/use-form';
+import { Button } from '../button/Button';
 import { Counter } from '../counter/Counter';
 import c from './styles.module.scss';
 
@@ -43,9 +44,7 @@ export const ReviewForm = () => {
           onIncrement={setIncrementRating}
         />
       </div>
-      <button className={c.clearBtn} onClick={setClearForm}>
-        Clear form
-      </button>
+      <Button onClick={setClearForm} title={'Clear form'} />
     </div>
   );
 };
