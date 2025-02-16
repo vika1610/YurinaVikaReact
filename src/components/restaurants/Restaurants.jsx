@@ -1,32 +1,35 @@
-import { restaurants } from '../../../mock/mock';
-import { Restaurant } from '../restaurant/Restaurant';
 import { useState } from 'react';
 import { RestaurantTab } from '../restaurantTab/RestaurantTab';
 import c from './styles.module.scss';
+import { useSelector } from 'react-redux';
+import { selectRestaurantsIds } from '../redux/entities/restaurants/slice';
+import { RestaurantContainer } from '../restaurant/RestaurantContainer';
 
 export const Restaurants = () => {
-  const [activeRestaurant, setActiveRestaurant] = useState(restaurants[0]);
+  const restaurantsIds = useSelector(selectRestaurantsIds);
 
-  const changeRestaurant = (restaurant) => {
-    if (activeRestaurant === restaurant) return;
-    setActiveRestaurant(restaurant);
+  const [activeRestaurantId, setActiveRestaurantId] = useState(
+    restaurantsIds?.[0],
+  );
+
+  const changeRestaurantId = (id) => {
+    if (activeRestaurantId === id) return;
+    setActiveRestaurantId(id);
   };
 
   return (
     <div className={c.container}>
       <div className={c.tabInner}>
-        {restaurants.map((restaurant) => (
+        {restaurantsIds.map((id) => (
           <RestaurantTab
-            name={restaurant.name}
-            key={restaurant.id}
-            onClick={() => changeRestaurant(restaurant)}
-            isActive={restaurant === activeRestaurant}
+            restaurantId={id}
+            key={id}
+            onClick={() => changeRestaurantId(id)}
+            isActive={id === activeRestaurantId}
           />
         ))}
       </div>
-      {activeRestaurant && (
-        <Restaurant key={activeRestaurant.id} restaurant={activeRestaurant} />
-      )}
+      {activeRestaurantId && <RestaurantContainer id={activeRestaurantId} />}
     </div>
   );
 };
