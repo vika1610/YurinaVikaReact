@@ -1,12 +1,12 @@
 import { useCount } from '../../hooks/use-count';
 import { Counter } from '../counter/Counter';
 
-export const DishCounter = ({ min: min, max: max }) => {
-  const { count, onDecrement, onIncrement } = useCount({ min: min, max: max });
+export const DishCounter = ({ menuItemId }) => {
+  const { amount, onDecrement, onIncrement } = useCount(menuItemId);
 
   return (
     <Counter
-      count={count}
+      count={amount}
       onDecrement={onDecrement}
       onIncrement={onIncrement}
     />

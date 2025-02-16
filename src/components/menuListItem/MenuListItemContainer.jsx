@@ -7,5 +7,5 @@ export const MenuListItemContainer = ({ menuItemId }) => {
 
   const { name } = menuItem || {};
 
-  return <MenuListItem menuItem={name} />;
+  return <MenuListItem menuItem={name} menuItemId={menuItemId} />;
 };
