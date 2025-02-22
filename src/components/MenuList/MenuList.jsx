@@ -1,4 +1,4 @@
-import { MenuListItem } from '../menuListItem/MenuListItem';
+import { MenuListItemContainer } from '../menuListItem/MenuListItemContainer';
 import c from './styles.module.scss';
 
 export const MenuList = ({ menu }) => {
@@ -6,8 +6,8 @@ export const MenuList = ({ menu }) => {
     <div className={c.container}>
       <h3 className={c.title}>Меню</h3>
       <ul className={c.list}>
-        {menu.map((menuItem) => (
-          <MenuListItem key={menuItem.id} menuItem={menuItem} />
+        {menu.map((id) => (
+          <MenuListItemContainer key={id} menuItemId={id} />
         ))}
       </ul>
     </div>

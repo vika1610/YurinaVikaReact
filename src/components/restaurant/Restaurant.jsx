@@ -5,9 +5,8 @@ import { ReviewsList } from '../reviewsList/ReviewsList';
 import c from './styles.module.scss';
 import { UserContext } from '../userContext';
 
-export const Restaurant = ({ restaurant }) => {
+export const Restaurant = ({ name, reviewsIds, menuIds }) => {
   const { user } = use(UserContext);
-  const { name, reviews, menu } = restaurant;
 
   if (!name) {
     return null;
@@ -16,8 +15,8 @@ export const Restaurant = ({ restaurant }) => {
   return (
     <div className={c.container}>
       <h2 className={c.title}>{name}</h2>
-      {Boolean(menu.length) && <MenuList menu={menu} />}
-      {Boolean(reviews.length) && <ReviewsList reviews={reviews} />}
+      {Boolean(menuIds.length) && <MenuList menu={menuIds} />}
+      {Boolean(reviewsIds.length) && <ReviewsList reviews={reviewsIds} />}
       {user.name && <ReviewForm />}
     </div>
   );
