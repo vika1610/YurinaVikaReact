@@ -1,12 +1,9 @@
-import { use } from 'react';
 import c from './styles.module.scss';
-import cl from 'classnames';
-import { ThemeContext } from '../themeContext';
 import { useSelector } from 'react-redux';
 import { selectRestaurantById } from '../redux/entities/restaurants/slice';
+import { Tab } from '../Tab/Tab.';
 
-export const RestaurantTab = ({ restaurantId, onClick, isActive }) => {
-  const { theme } = use(ThemeContext);
+export const RestaurantTab = ({ restaurantId }) => {
   const restaurant = useSelector((state) =>
     selectRestaurantById(state, restaurantId),
   );
@@ -18,14 +15,10 @@ export const RestaurantTab = ({ restaurantId, onClick, isActive }) => {
   }
 
   return (
-    <button
-      className={cl(c.tabBtn, {
-        [c.dark]: theme === 'dark',
-      })}
-      disabled={isActive}
-      onClick={onClick}
-    >
-      {name}
-    </button>
+    <Tab
+      name={name}
+      to={`/restaurants/${restaurantId}`}
+      className={c.navLinkContainer}
+    />
   );
 };

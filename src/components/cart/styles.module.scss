@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 40px;
+  background: orange;
+}
+
+.title {
+  margin-bottom: 20px;
+  font-size: 32px;
+}
+
+.list {
+  padding-left: 20px;
+}
