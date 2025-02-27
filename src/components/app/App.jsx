@@ -29,9 +29,7 @@ export const App = () => {
                     <Route path='reviews' element={<ReviewsPage />} />
                   </Route>
                 </Route>
-                <Route path='/dish' element={<DishPage />}>
-                  <Route path=':dishId' element={<DishPage />} />
-                </Route>
+                <Route path='/dish/:dishId' element={<DishPage />} />
               </Route>
             </Routes>
           </UserContextProvider>

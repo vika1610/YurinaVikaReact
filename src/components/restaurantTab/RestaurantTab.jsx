@@ -1,7 +1,7 @@
 import c from './styles.module.scss';
 import { useSelector } from 'react-redux';
 import { selectRestaurantById } from '../redux/entities/restaurants/slice';
-import { Tab } from '../Tab/Tab.';
+import { TabLink } from '../tabLink/Tab.';
 
 export const RestaurantTab = ({ restaurantId }) => {
   const restaurant = useSelector((state) =>
@@ -15,7 +15,7 @@ export const RestaurantTab = ({ restaurantId }) => {
   }
 
   return (
-    <Tab
+    <TabLink
       name={name}
       to={`/restaurants/${restaurantId}`}
       className={c.navLinkContainer}

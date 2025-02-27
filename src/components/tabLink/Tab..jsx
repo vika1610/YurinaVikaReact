@@ -4,7 +4,7 @@ import { ThemeContext } from '../themeContext';
 import { use } from 'react';
 import c from './styles.module.scss';
 
-export const Tab = ({ to, name, className }) => {
+export const TabLink = ({ to, name, className }) => {
   const { theme } = use(ThemeContext);
 
   return (
