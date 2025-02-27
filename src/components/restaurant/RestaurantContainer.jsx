@@ -5,7 +5,7 @@ import { selectRestaurantById } from '../redux/entities/restaurants/slice';
 export const RestaurantContainer = ({ id }) => {
   const restaurant = useSelector((state) => selectRestaurantById(state, id));
 
-  const { name, reviews, menu } = restaurant || {};
+  const { name } = restaurant || {};
 
-  return <Restaurant name={name} reviewsIds={reviews} menuIds={menu} />;
+  return <Restaurant name={name} />;
 };

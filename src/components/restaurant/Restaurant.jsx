@@ -1,11 +1,11 @@
 import { use } from 'react';
-import { MenuList } from '../MenuList/MenuList';
 import { ReviewForm } from '../reviewForm/ReviewForm';
-import { ReviewsList } from '../reviewsList/ReviewsList';
 import c from './styles.module.scss';
 import { UserContext } from '../userContext';
+import { Outlet } from 'react-router';
+import { TabLink } from '../tabLink/Tab.';
 
-export const Restaurant = ({ name, reviewsIds, menuIds }) => {
+export const Restaurant = ({ name }) => {
   const { user } = use(UserContext);
 
   if (!name) {
@@ -15,8 +15,13 @@ export const Restaurant = ({ name, reviewsIds, menuIds }) => {
   return (
     <div className={c.container}>
       <h2 className={c.title}>{name}</h2>
-      {Boolean(menuIds.length) && <MenuList menu={menuIds} />}
-      {Boolean(reviewsIds.length) && <ReviewsList reviews={reviewsIds} />}
+      <div className={c.tabs}>
+        <TabLink name={'меню'} to='menu' />
+        <TabLink name={'отзывы'} to='reviews' />
+      </div>
+
+      <Outlet />
+
       {user.name && <ReviewForm />}
     </div>
   );
