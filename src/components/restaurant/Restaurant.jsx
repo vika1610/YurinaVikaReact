@@ -5,7 +5,7 @@ import { UserContext } from '../userContext';
 import { Outlet } from 'react-router';
 import { TabLink } from '../tabLink/Tab.';
 
-export const Restaurant = ({ name }) => {
+export const Restaurant = ({ name, addReview, addReviewLoading }) => {
   const { user } = use(UserContext);
 
   if (!name) {
@@ -22,7 +22,9 @@ export const Restaurant = ({ name }) => {
 
       <Outlet />
 
-      {user.name && <ReviewForm />}
+      {user.name && (
+        <ReviewForm onSubmit={addReview} disableSubmit={addReviewLoading} />
+      )}
     </div>
   );
 };

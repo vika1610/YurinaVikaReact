@@ -1,23 +1,32 @@
 import { useParams } from 'react-router';
-import { getDishById } from '../components/redux/entities/dishes/get-dish-by-id';
-import { useRequest } from '../components/redux/entities/hooks/use-request';
-import {
-  REQUEST_STATUS_PENDING,
-  REQUEST_STATUS_REJECTED,
-} from '../components/redux/constants';
-import { DishContainer } from '../components/dishContainer/DishContainer';
+import { useGetDishByIdQuery } from '../components/redux/services/api/api';
+import { DishCounter } from '../components/dishCounter/DishCounter';
 
 export const DishPage = () => {
   const { dishId } = useParams();
 
-  const requestStatus = useRequest(getDishById, dishId);
+  const { data, isFetching, isError } = useGetDishByIdQuery(dishId);
 
-  if (requestStatus === REQUEST_STATUS_PENDING) {
+  const { name, price, ingredients } = data || {};
+
+  if (isFetching) {
     return '...loading';
   }
-  if (requestStatus === REQUEST_STATUS_REJECTED) {
+  if (isError) {
     return 'error';
   }
 
-  return <DishContainer dishId={dishId} />;
+  if (!data) {
+    return null;
+  }
+
+  return (
+    <div>
+      <h2>{name}</h2>
+      <DishCounter menuItemId={dishId} />
+      <span>price: {price}$</span>
+      <br />
+      <span>ingredients: {ingredients?.join(', ')}</span>
+    </div>
+  );
 };
