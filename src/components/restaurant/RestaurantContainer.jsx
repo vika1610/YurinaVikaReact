@@ -1,11 +1,56 @@
-import { useSelector } from 'react-redux';
 import { Restaurant } from './Restaurant';
-import { selectRestaurantById } from '../redux/entities/restaurants/slice';
+import {
+  useAddReviewMutation,
+  // useGetRestaurantByIdQuery,
+  useGetRestaurantsQuery,
+} from '../redux/services/api/api';
+import { use, useCallback } from 'react';
+import { UserContext } from '../userContext';
 
-export const RestaurantContainer = ({ id }) => {
-  const restaurant = useSelector((state) => selectRestaurantById(state, id));
+export const RestaurantContainer = ({ restaurantId }) => {
+  const { user } = use(UserContext);
+  // const { data, isFetching, isError } = useGetRestaurantByIdQuery(restaurantId); // можно с перезапросом
 
-  const { name } = restaurant || {};
+  const { data, isFetching, isError } = useGetRestaurantsQuery(undefined, {
+    selectFromResult: (result) => ({
+      ...result,
+      data: result?.data?.find(({ id }) => id === restaurantId),
+    }),
+  }); // можно без перезапроса
 
-  return <Restaurant name={name} />;
+  const [addReview, { isLoading }] = useAddReviewMutation();
+
+  const handleAddReview = useCallback(
+    (review) => {
+      addReview({
+        restaurantId,
+        review: {
+          ...review,
+          userId: user.userId,
+        },
+      });
+    },
+    [addReview, restaurantId, user.userId],
+  );
+
+  if (isFetching) {
+    return '...loading';
+  }
+  if (isError) {
+    return 'error';
+  }
+
+  if (!data) {
+    return null;
+  }
+
+  const { name } = data || {};
+
+  return (
+    <Restaurant
+      name={name}
+      addReview={handleAddReview}
+      addReviewLoading={isLoading}
+    />
+  );
 };

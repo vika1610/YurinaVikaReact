@@ -1,11 +1,15 @@
-import { useSelector } from 'react-redux';
 import c from './styles.module.scss';
-import { selectUserById } from '../redux/entities/users/slice';
+import { useGetUsersQuery } from '../redux/services/api/api';
 
 export const ReviewsListItem = ({ reviewsItem, userId }) => {
-  const user = useSelector((state) => selectUserById(state, userId));
+  const { data } = useGetUsersQuery(undefined, {
+    selectFromResult: (result) => ({
+      ...result,
+      data: result?.data?.find(({ id }) => id === userId),
+    }),
+  });
 
-  const { name } = user || {};
+  const { name } = data || {};
 
   return (
     <li className={c.listItem}>

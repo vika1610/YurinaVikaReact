@@ -13,4 +13,8 @@
     color: orange;
     background: black;
   }
+
+  &:disabled {
+    opacity: .5;
+  }
 }

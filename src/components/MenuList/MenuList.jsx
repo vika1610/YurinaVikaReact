@@ -1,23 +1,17 @@
-import { useSelector } from 'react-redux';
-import { MenuListItemContainer } from '../menuListItem/MenuListItemContainer';
-import { getDishes } from '../redux/entities/dishes/get-dishes';
-import { useRequest } from '../redux/entities/hooks/use-request';
 import c from './styles.module.scss';
-import { selectTotalDishes } from '../redux/entities/dishes/slice';
-import {
-  REQUEST_STATUS_PENDING,
-  REQUEST_STATUS_REJECTED,
-} from '../redux/constants';
 
-export const MenuList = ({ menu }) => {
-  const requestStatus = useRequest(getDishes);
-  const dishes = useSelector(selectTotalDishes);
+import { useGetDishesByRestaurantIdQuery } from '../redux/services/api/api';
+import { MenuListItem } from '../menuListItem/MenuListItem';
 
-  if (requestStatus === REQUEST_STATUS_PENDING || !dishes) {
+export const MenuList = ({ restaurantId }) => {
+  const { data, isLoading, isError } =
+    useGetDishesByRestaurantIdQuery(restaurantId);
+
+  if (isLoading) {
     return '...loading';
   }
 
-  if (requestStatus === REQUEST_STATUS_REJECTED) {
+  if (isError) {
     return 'error';
   }
 
@@ -25,8 +19,8 @@ export const MenuList = ({ menu }) => {
     <div className={c.container}>
       <h3 className={c.title}>Меню</h3>
       <ul className={c.list}>
-        {menu.map((id) => (
-          <MenuListItemContainer key={id} menuItemId={id} />
+        {data.map(({ id, name }) => (
+          <MenuListItem key={id} menuItem={name} menuItemId={id} />
         ))}
       </ul>
     </div>
