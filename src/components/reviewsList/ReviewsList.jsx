@@ -2,40 +2,29 @@ import { use } from 'react';
 import cl from 'classnames';
 import c from './styles.module.scss';
 import { ThemeContext } from '../themeContext';
-import { ReviewsListItemContainer } from '../reviewsListItem/ReviewsListItemContainer';
-import { useRequest } from '../redux/entities/hooks/use-request';
-import { getUsers } from '../redux/entities/users/get-users';
 import {
-  REQUEST_STATUS_PENDING,
-  REQUEST_STATUS_REJECTED,
-} from '../redux/constants';
-import { useSelector } from 'react-redux';
-import { selectTotalUsers } from '../redux/entities/users/slice';
-import { getReviews } from '../redux/entities/reviews/get-reviews';
-import { selectTotalReviews } from '../redux/entities/reviews/slice';
+  useGetReviewsByRestaurantIdQuery,
+  useGetUsersQuery,
+} from '../redux/services/api/api';
+import { ReviewsListItem } from '../reviewsListItem/ReviewsListItem';
 
-export const ReviewsList = ({ reviews }) => {
+export const ReviewsList = ({ restaurantId }) => {
   const { theme } = use(ThemeContext);
 
-  const requestUsersStatus = useRequest(getUsers);
-  const requestReviewsStatus = useRequest(getReviews);
+  const {
+    data: reviewsData,
+    isLoading: reviewsIsLoading,
+    isError: reviewsIsError,
+  } = useGetReviewsByRestaurantIdQuery(restaurantId);
 
-  const usersTotal = useSelector(selectTotalUsers);
-  const reviewsTotal = useSelector(selectTotalReviews);
+  const { isLoading: usersIsLoading, isError: usersIsError } =
+    useGetUsersQuery();
 
-  if (
-    requestUsersStatus === REQUEST_STATUS_PENDING ||
-    requestReviewsStatus === REQUEST_STATUS_PENDING ||
-    !usersTotal ||
-    !reviewsTotal
-  ) {
+  if (reviewsIsLoading || usersIsLoading) {
     return '...loading';
   }
 
-  if (
-    requestUsersStatus === REQUEST_STATUS_REJECTED ||
-    requestReviewsStatus === REQUEST_STATUS_REJECTED
-  ) {
+  if (reviewsIsError || usersIsError) {
     return 'error';
   }
 
@@ -47,8 +36,8 @@ export const ReviewsList = ({ reviews }) => {
     >
       <h3 className={c.title}>Отзывы</h3>
       <ul className={c.list}>
-        {reviews.map((id) => (
-          <ReviewsListItemContainer key={id} reviewsItemId={id} />
+        {reviewsData?.map(({ id, text, userId }) => (
+          <ReviewsListItem key={id} reviewsItem={text} userId={userId} />
         ))}
       </ul>
     </div>

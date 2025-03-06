@@ -22,3 +22,5 @@ export const RestaurantTab = ({ restaurantId }) => {
     />
   );
 };
+
+// may be deleted

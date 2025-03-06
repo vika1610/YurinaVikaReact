@@ -3,7 +3,7 @@ import { Button } from '../button/Button';
 import { Counter } from '../counter/Counter';
 import c from './styles.module.scss';
 
-export const ReviewForm = () => {
+export const ReviewForm = ({ onSubmit, disableSubmit }) => {
   const {
     form,
     setUser,
@@ -45,6 +45,12 @@ export const ReviewForm = () => {
         />
       </div>
       <Button onClick={setClearForm} title={'Clear form'} />
+      <br />
+      <Button
+        onClick={() => onSubmit({ text, rating })}
+        title={'Submit form'}
+        disabled={disableSubmit}
+      />
     </div>
   );
 };

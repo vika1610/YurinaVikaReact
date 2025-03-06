@@ -9,7 +9,7 @@ export const UserContextProvider = ({ children }) => {
       if (currentUser.name) {
         return { ...currentUser, name: '' };
       } else {
-        return { ...currentUser, name: 'Vikky' };
+        return { ...currentUser, name: 'Vikky', userId: '2551-qwerty-fhr5678' };
       }
     });
   }, []);
