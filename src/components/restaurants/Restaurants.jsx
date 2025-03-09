@@ -1,10 +1,18 @@
+'use client';
+
 import c from './styles.module.scss';
-import { Outlet } from 'react-router';
 import { useGetRestaurantsQuery } from '../redux/services/api/api';
 import { TabLink } from '../tabLink/Tab.';
+import { usePathname } from 'next/navigation';
 
-export const Restaurants = () => {
+export const Restaurants = ({ children }) => {
   const { data, isLoading, isError } = useGetRestaurantsQuery();
+  const pathname = usePathname();
+
+  let url = pathname;
+  let parts = url.split('/');
+  parts.pop();
+  let newUrl = parts.join('/');
 
   if (isLoading) {
     return '...loading';
@@ -25,10 +33,11 @@ export const Restaurants = () => {
             name={name}
             to={`/restaurants/${id}`}
             className={c.navLinkContainer}
+            disabled={newUrl === `/restaurants/${id}`}
           />
         ))}
       </div>
-      <Outlet />
+      {children}
     </div>
   );
 };

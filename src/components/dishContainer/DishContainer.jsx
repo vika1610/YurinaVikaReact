@@ -1,11 +1,23 @@
-import { useSelector } from 'react-redux';
+'use client';
+
 import { DishCounter } from '../dishCounter/DishCounter';
-import { selectDishById } from '../redux/entities/dishes/slice';
+import { useGetDishByIdQuery } from '../redux/services/api/api';
 
 export const DishContainer = ({ dishId }) => {
-  const dish = useSelector((state) => selectDishById(state, dishId));
+  const { data, isFetching, isError } = useGetDishByIdQuery(dishId);
 
-  const { name, price, ingredients } = dish || {};
+  const { name, price, ingredients } = data || {};
+
+  if (isFetching) {
+    return '...loading';
+  }
+  if (isError) {
+    return 'error';
+  }
+
+  if (!data) {
+    return null;
+  }
 
   return (
     <div>
@@ -17,5 +29,3 @@ export const DishContainer = ({ dishId }) => {
     </div>
   );
 };
-
-// may be deleted

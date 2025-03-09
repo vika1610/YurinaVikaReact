@@ -1,3 +1,5 @@
+'use client';
+
 import { use } from 'react';
 import cl from 'classnames';
 import c from './styles.module.scss';

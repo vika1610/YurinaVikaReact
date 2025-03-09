@@ -1,12 +1,18 @@
+'use client';
+
 import { use } from 'react';
 import { ReviewForm } from '../reviewForm/ReviewForm';
 import c from './styles.module.scss';
 import { UserContext } from '../userContext';
-import { Outlet } from 'react-router';
 import { TabLink } from '../tabLink/Tab.';
+import { usePathname } from 'next/navigation';
 
-export const Restaurant = ({ name, addReview, addReviewLoading }) => {
+export const Restaurant = ({ name, addReview, addReviewLoading, children }) => {
   const { user } = use(UserContext);
+  const pathname = usePathname();
+
+  let url = pathname;
+  let lastSlug = url.split('/').pop();
 
   if (!name) {
     return null;
@@ -16,11 +22,15 @@ export const Restaurant = ({ name, addReview, addReviewLoading }) => {
     <div className={c.container}>
       <h2 className={c.title}>{name}</h2>
       <div className={c.tabs}>
-        <TabLink name={'меню'} to='menu' />
-        <TabLink name={'отзывы'} to='reviews' />
+        <TabLink name={'меню'} to='menu' disabled={lastSlug === 'menu'} />
+        <TabLink
+          name={'отзывы'}
+          to='reviews'
+          disabled={lastSlug === 'reviews'}
+        />
       </div>
 
-      <Outlet />
+      {children}
 
       {user.name && (
         <ReviewForm onSubmit={addReview} disableSubmit={addReviewLoading} />
