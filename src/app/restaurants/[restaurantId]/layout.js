@@ -3,8 +3,6 @@ import { RestaurantContainer } from '../../../components/restaurant/RestaurantCo
 export const RestaurantLayout = async ({ params, children }) => {
   const { restaurantId } = await params;
 
-  console.log('restaurantId', restaurantId);
-
   return (
     <RestaurantContainer restaurantId={restaurantId}>
       {children}
