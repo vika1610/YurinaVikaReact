@@ -1,10 +1,10 @@
-import { Link } from 'react-router';
+import Link from 'next/link';
 
 export const HomePage = () => {
   return (
     <div>
       Home page <br />
-      <Link to='/restaurants'>show restaurants</Link>
+      <Link href='/restaurants'>show restaurants</Link>
     </div>
   );
 };

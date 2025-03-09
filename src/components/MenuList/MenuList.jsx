@@ -1,3 +1,5 @@
+'use client';
+
 import c from './styles.module.scss';
 
 import { useGetDishesByRestaurantIdQuery } from '../redux/services/api/api';
