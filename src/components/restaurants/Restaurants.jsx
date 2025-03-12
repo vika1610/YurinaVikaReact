@@ -33,7 +33,7 @@ export const Restaurants = ({ children }) => {
             name={name}
             to={`/restaurants/${id}`}
             className={c.navLinkContainer}
-            disabled={newUrl === `/restaurants/${id}`}
+            isActive={newUrl === `/restaurants/${id}`}
           />
         ))}
       </div>

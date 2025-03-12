@@ -1,5 +1,3 @@
-'use client';
-
 import { CartContainer } from '../cart/CartContainer';
 import { Header } from '../header/Header';
 import { ScrollProgressBar } from '../scrollProgressBar/ScrollProgressBar';

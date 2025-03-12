@@ -11,8 +11,7 @@ export const Restaurant = ({ name, addReview, addReviewLoading, children }) => {
   const { user } = use(UserContext);
   const pathname = usePathname();
 
-  let url = pathname;
-  let lastSlug = url.split('/').pop();
+  const lastSlug = pathname.split('/').pop();
 
   if (!name) {
     return null;
@@ -22,11 +21,11 @@ export const Restaurant = ({ name, addReview, addReviewLoading, children }) => {
     <div className={c.container}>
       <h2 className={c.title}>{name}</h2>
       <div className={c.tabs}>
-        <TabLink name={'меню'} to='menu' disabled={lastSlug === 'menu'} />
+        <TabLink name={'меню'} to='menu' isActive={lastSlug === 'menu'} />
         <TabLink
           name={'отзывы'}
           to='reviews'
-          disabled={lastSlug === 'reviews'}
+          isActive={lastSlug === 'reviews'}
         />
       </div>
 

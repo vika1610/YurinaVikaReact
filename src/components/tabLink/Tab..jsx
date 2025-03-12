@@ -6,19 +6,18 @@ import { use } from 'react';
 import c from './styles.module.scss';
 import Link from 'next/link';
 
-export const TabLink = ({ to, name, className, disabled }) => {
+export const TabLink = ({ to, name, className, isActive }) => {
   const { theme } = use(ThemeContext);
 
   return (
-    <Link href={to} className={className}>
-      <button
-        className={cl(c.tabBtn, {
-          [c.dark]: theme === 'dark',
-        })}
-        disabled={disabled}
-      >
-        {name}
-      </button>
+    <Link
+      href={to}
+      className={cl(c.tabBtn, className, {
+        [c.dark]: theme === 'dark',
+        [c.isActive]: isActive,
+      })}
+    >
+      {name}
     </Link>
   );
 };
