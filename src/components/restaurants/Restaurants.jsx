@@ -9,10 +9,12 @@ export const Restaurants = ({ children }) => {
   const { data, isLoading, isError } = useGetRestaurantsQuery();
   const pathname = usePathname();
 
-  let url = pathname;
-  let parts = url.split('/');
-  parts.pop();
-  let newUrl = parts.join('/');
+  const getRestaurantsBasePath = () => {
+    const parts = pathname.split('/');
+    parts.pop();
+    const newUrl = parts.join('/');
+    return newUrl;
+  };
 
   if (isLoading) {
     return '...loading';
@@ -33,7 +35,7 @@ export const Restaurants = ({ children }) => {
             name={name}
             to={`/restaurants/${id}`}
             className={c.navLinkContainer}
-            isActive={newUrl === `/restaurants/${id}`}
+            isActive={getRestaurantsBasePath() === `/restaurants/${id}`}
           />
         ))}
       </div>
