@@ -1,3 +1,5 @@
+'use client';
+
 import { Restaurant } from './Restaurant';
 import {
   useAddReviewMutation,
@@ -7,7 +9,7 @@ import {
 import { use, useCallback } from 'react';
 import { UserContext } from '../userContext';
 
-export const RestaurantContainer = ({ restaurantId }) => {
+export const RestaurantContainer = ({ restaurantId, children }) => {
   const { user } = use(UserContext);
   // const { data, isFetching, isError } = useGetRestaurantByIdQuery(restaurantId); // можно с перезапросом
 
@@ -51,6 +53,8 @@ export const RestaurantContainer = ({ restaurantId }) => {
       name={name}
       addReview={handleAddReview}
       addReviewLoading={isLoading}
-    />
+    >
+      {children}
+    </Restaurant>
   );
 };
