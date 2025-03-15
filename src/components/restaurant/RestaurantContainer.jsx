@@ -14,13 +14,5 @@ export const RestaurantContainer = async ({ id, children }) => {
 
   const { name } = restaurant || {};
 
-  return (
-    <Restaurant
-      name={name}
-      // addReview={handleAddReview}
-      // addReviewLoading={isLoading}
-    >
-      {children}
-    </Restaurant>
-  );
+  return <Restaurant name={name}>{children}</Restaurant>;
 };
