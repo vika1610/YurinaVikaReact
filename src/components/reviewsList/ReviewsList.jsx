@@ -8,7 +8,7 @@ import { ReviewsListItem } from '../reviewsListItem/ReviewsListItem';
 import { ReviewForm } from '../reviewForm/ReviewForm';
 import { UserContext } from '../userContext';
 
-export const ReviewsList = ({ reviewsData, usersData }) => {
+export const ReviewsList = ({ reviewsData, usersData, onAddReview }) => {
   const { theme } = use(ThemeContext);
   const { user } = use(UserContext);
 
@@ -29,10 +29,7 @@ export const ReviewsList = ({ reviewsData, usersData }) => {
           />
         ))}
       </ul>
-      {user.name && (
-        <ReviewForm />
-        // <ReviewForm onSubmit={addReview} disableSubmit={addReviewLoading} />
-      )}
+      {user.name && <ReviewForm submitFormAction={onAddReview} />}
     </div>
   );
 };
