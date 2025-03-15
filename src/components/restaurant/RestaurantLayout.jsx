@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { RestaurantContainer } from '../../../components/restaurant/RestaurantContainer';
+import { RestaurantContainer } from './RestaurantContainer';
 
 export const RestaurantLayout = async ({ params, children }) => {
   const { restaurantId } = await params;
@@ -10,5 +10,3 @@ export const RestaurantLayout = async ({ params, children }) => {
     </Suspense>
   );
 };
-
-export default RestaurantLayout;

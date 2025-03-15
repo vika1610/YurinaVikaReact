@@ -4,31 +4,13 @@ import { use } from 'react';
 import cl from 'classnames';
 import c from './styles.module.scss';
 import { ThemeContext } from '../themeContext';
-import {
-  useGetReviewsByRestaurantIdQuery,
-  useGetUsersQuery,
-} from '../redux/services/api/api';
 import { ReviewsListItem } from '../reviewsListItem/ReviewsListItem';
+import { ReviewForm } from '../reviewForm/ReviewForm';
+import { UserContext } from '../userContext';
 
-export const ReviewsList = ({ restaurantId }) => {
+export const ReviewsList = ({ reviewsData, usersData }) => {
   const { theme } = use(ThemeContext);
-
-  const {
-    data: reviewsData,
-    isLoading: reviewsIsLoading,
-    isError: reviewsIsError,
-  } = useGetReviewsByRestaurantIdQuery(restaurantId);
-
-  const { isLoading: usersIsLoading, isError: usersIsError } =
-    useGetUsersQuery();
-
-  if (reviewsIsLoading || usersIsLoading) {
-    return '...loading';
-  }
-
-  if (reviewsIsError || usersIsError) {
-    return 'error';
-  }
+  const { user } = use(UserContext);
 
   return (
     <div
@@ -39,9 +21,18 @@ export const ReviewsList = ({ restaurantId }) => {
       <h3 className={c.title}>Отзывы</h3>
       <ul className={c.list}>
         {reviewsData?.map(({ id, text, userId }) => (
-          <ReviewsListItem key={id} reviewsItem={text} userId={userId} />
+          <ReviewsListItem
+            key={id}
+            reviewsItem={text}
+            userId={userId}
+            usersData={usersData}
+          />
         ))}
       </ul>
+      {user.name && (
+        <ReviewForm />
+        // <ReviewForm onSubmit={addReview} disableSubmit={addReviewLoading} />
+      )}
     </div>
   );
 };

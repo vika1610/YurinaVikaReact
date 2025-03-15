@@ -1,21 +1,17 @@
 'use client';
 
 import c from './styles.module.scss';
-import { useGetUsersQuery } from '../redux/services/api/api';
 
-export const ReviewsListItem = ({ reviewsItem, userId }) => {
-  const { data } = useGetUsersQuery(undefined, {
-    selectFromResult: (result) => ({
-      ...result,
-      data: result?.data?.find(({ id }) => id === userId),
-    }),
-  });
+export const ReviewsListItem = ({ reviewsItem, userId, usersData }) => {
+  const user = usersData?.find(({ id }) => userId === id);
 
-  const { name } = data || {};
+  if (!user?.name) {
+    return null;
+  }
 
   return (
     <li className={c.listItem}>
-      <span>{name}: </span>
+      <span>{user.name}: </span>
       {reviewsItem}
     </li>
   );

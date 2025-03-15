@@ -1,58 +1,24 @@
-'use client';
-
 import { Restaurant } from './Restaurant';
-import {
-  useAddReviewMutation,
-  // useGetRestaurantByIdQuery,
-  useGetRestaurantsQuery,
-} from '../redux/services/api/api';
-import { use, useCallback } from 'react';
-import { UserContext } from '../userContext';
+import { getRestaurants } from '../../services/get-restaurants';
 
-export const RestaurantContainer = ({ restaurantId, children }) => {
-  const { user } = use(UserContext);
-  // const { data, isFetching, isError } = useGetRestaurantByIdQuery(restaurantId); // можно с перезапросом
+export const RestaurantContainer = async ({ id, children }) => {
+  const restaurants = await getRestaurants();
 
-  const { data, isFetching, isError } = useGetRestaurantsQuery(undefined, {
-    selectFromResult: (result) => ({
-      ...result,
-      data: result?.data?.find(({ id }) => id === restaurantId),
-    }),
-  }); // можно без перезапроса
-
-  const [addReview, { isLoading }] = useAddReviewMutation();
-
-  const handleAddReview = useCallback(
-    (review) => {
-      addReview({
-        restaurantId,
-        review: {
-          ...review,
-          userId: user.userId,
-        },
-      });
-    },
-    [addReview, restaurantId, user.userId],
+  const restaurant = restaurants.find(
+    ({ id: restaurantId }) => restaurantId === id,
   );
 
-  if (isFetching) {
-    return '...loading';
-  }
-  if (isError) {
-    return 'error';
-  }
-
-  if (!data) {
+  if (!restaurant) {
     return null;
   }
 
-  const { name } = data || {};
+  const { name } = restaurant || {};
 
   return (
     <Restaurant
       name={name}
-      addReview={handleAddReview}
-      addReviewLoading={isLoading}
+      // addReview={handleAddReview}
+      // addReviewLoading={isLoading}
     >
       {children}
     </Restaurant>
