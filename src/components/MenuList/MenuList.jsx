@@ -1,27 +1,15 @@
-'use client';
-
 import c from './styles.module.scss';
-
-import { useGetDishesByRestaurantIdQuery } from '../redux/services/api/api';
 import { MenuListItem } from '../menuListItem/MenuListItem';
+import { getDishesByRestaurantId } from '../../services/get-dishes-by-restaurant-id';
 
-export const MenuList = ({ restaurantId }) => {
-  const { data, isLoading, isError } =
-    useGetDishesByRestaurantIdQuery(restaurantId);
-
-  if (isLoading) {
-    return '...loading';
-  }
-
-  if (isError) {
-    return 'error';
-  }
+export const MenuList = async ({ restaurantId }) => {
+  const menu = await getDishesByRestaurantId(restaurantId);
 
   return (
     <div className={c.container}>
       <h3 className={c.title}>Меню</h3>
       <ul className={c.list}>
-        {data.map(({ id, name }) => (
+        {menu.map(({ id, name }) => (
           <MenuListItem key={id} menuItem={name} menuItemId={id} />
         ))}
       </ul>

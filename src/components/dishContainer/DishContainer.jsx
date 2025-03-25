@@ -1,21 +1,11 @@
-'use client';
-
+import { getDishById } from '../../services/get-dish-by-id';
 import { DishCounter } from '../dishCounter/DishCounter';
-import { useGetDishByIdQuery } from '../redux/services/api/api';
 
-export const DishContainer = ({ dishId }) => {
-  const { data, isFetching, isError } = useGetDishByIdQuery(dishId);
+export const DishContainer = async ({ dishId }) => {
+  const dish = await getDishById(dishId);
+  const { name, price, ingredients } = dish || {};
 
-  const { name, price, ingredients } = data || {};
-
-  if (isFetching) {
-    return '...loading';
-  }
-  if (isError) {
-    return 'error';
-  }
-
-  if (!data) {
+  if (!dish) {
     return null;
   }
 

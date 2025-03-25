@@ -2,9 +2,11 @@ import cl from 'classnames';
 import c from './styles.module.scss';
 import { use } from 'react';
 import { ThemeContext } from '../themeContext';
+import { useFormStatus } from 'react-dom';
 
-export const Button = ({ title, onClick, disabled, className }) => {
+export const Button = ({ title, onClick, className, formAction }) => {
   const { theme } = use(ThemeContext);
+  const { pending } = useFormStatus();
   return (
     <button
       className={cl(
@@ -14,10 +16,11 @@ export const Button = ({ title, onClick, disabled, className }) => {
         },
         className,
       )}
-      disabled={disabled}
+      formAction={formAction}
+      disabled={pending}
       onClick={onClick}
     >
-      {title}
+      {pending ? 'loading...' : title}
     </button>
   );
 };

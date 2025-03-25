@@ -1,8 +1,13 @@
-import { ReviewsList } from '../../../../components/reviewsList/ReviewsList';
+import { Suspense } from 'react';
+import { ReviewsListLayout } from '../../../../components/reviewsList/ReviewsListLayout';
 
 const ReviewsPage = async ({ params }) => {
   const { restaurantId } = await params;
-  return <ReviewsList restaurantId={restaurantId} />;
+  return (
+    <Suspense fallback='...loading ReviewsList'>
+      <ReviewsListLayout restaurantId={restaurantId} />
+    </Suspense>
+  );
 };
 
 export default ReviewsPage;

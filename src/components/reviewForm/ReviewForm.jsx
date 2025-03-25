@@ -1,56 +1,67 @@
-import { useForm } from '../../hooks/use-form';
+import { useActionState, useRef } from 'react';
 import { Button } from '../button/Button';
-import { Counter } from '../counter/Counter';
 import c from './styles.module.scss';
 
-export const ReviewForm = ({ onSubmit, disableSubmit }) => {
-  const {
-    form,
-    setUser,
-    setText,
-    setDecrementRating,
-    setIncrementRating,
-    setClearForm,
-  } = useForm();
-  const { user, text, rating } = form;
+export const ReviewForm = ({ submitFormAction }) => {
+  const ratingRef = useRef();
+
+  const [formState, submitAction] = useActionState(submitFormAction, {
+    text: 'default text',
+    rating: 5,
+  });
 
   return (
-    <div className={c.container}>
+    <form action={submitAction} className={c.container}>
       <div className={c.inputInner}>
-        <span className={c.title}>Name</span>
+        <label className={c.title} htmlFor='text'>
+          Text
+        </label>
         <input
           className={c.input}
           type='text'
-          value={user}
-          onChange={(event) => {
-            setUser(event.target.value);
-          }}
+          id='text'
+          name='text'
+          defaultValue={formState.text}
         />
       </div>
+
+      {formState.errorMessage && <div>error</div>}
+
       <div className={c.inputInner}>
-        <span className={c.title}>Text</span>
+        <label className={c.title} htmlFor='rating'>
+          Rating
+        </label>
+        <button
+          type='button'
+          id='decrement-button'
+          onClick={() => ratingRef.current.stepDown()}
+        >
+          -
+        </button>
         <input
-          className={c.input}
-          type='text'
-          value={text}
-          onChange={(event) => setText(event.target.value)}
+          type='number'
+          id='rating'
+          name='rating'
+          min={1}
+          max={5}
+          ref={ratingRef}
+          defaultValue={formState.rating}
         />
+        <button
+          type='button'
+          id='increment-button'
+          onClick={() => ratingRef.current.stepUp()}
+        >
+          +
+        </button>
       </div>
-      <div className={c.inputInner}>
-        <span className={c.title}>Rating</span>
-        <Counter
-          count={rating}
-          onDecrement={setDecrementRating}
-          onIncrement={setIncrementRating}
-        />
-      </div>
-      <Button onClick={setClearForm} title={'Clear form'} />
-      <br />
       <Button
-        onClick={() => onSubmit({ text, rating })}
-        title={'Submit form'}
-        disabled={disableSubmit}
+        type='submit'
+        formAction={() => submitAction(null)}
+        title={'Clear form'}
       />
-    </div>
+      <br />
+      <Button type='submit' title={'Submit form'} />
+    </form>
   );
 };

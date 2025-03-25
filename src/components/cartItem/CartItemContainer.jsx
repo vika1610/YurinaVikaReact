@@ -2,18 +2,17 @@ import { useSelector } from 'react-redux';
 import { selectAmountByItemId } from '../redux/entities/cart/slice';
 import { CartItem } from './CartItem';
 import { DishCounter } from '../dishCounter/DishCounter';
-import { useGetDishByIdQuery } from '../redux/services/api/api';
 
-export const CardItemContainer = ({ id }) => {
+export const CardItemContainer = ({ id, dishes }) => {
   const amount = useSelector((state) => selectAmountByItemId(state, id));
 
-  const { data } = useGetDishByIdQuery(id);
+  const dish = dishes.find(({ id: dishId }) => dishId === id);
 
-  if (!data) return null;
+  if (!dish) return null;
 
   return (
     <>
-      <CartItem amount={amount} menuItem={data.name} />
+      <CartItem amount={amount} menuItem={dish.name} />
       <DishCounter menuItemId={id} />
     </>
   );
